@@ -76,7 +76,7 @@ favorites.removeUserCallback = data => {
           favorites.clearTable();
           favorites.fillTable(response.data);
           money.updateUsersList(response.data);
-          favorites.setMessage( response.data = "Пользователь успешно удален!");  //по другому не придумал как, иначе [object Object]
+          favorites.setMessage(response.data = "Пользователь успешно удален!");  //по другому не придумал как, иначе [object Object]
         }
         favorites.setMessage(!response.success, response.data);
     })
