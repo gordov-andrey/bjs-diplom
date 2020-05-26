@@ -3,12 +3,12 @@ const logout = new LogoutButton();
 
 logout.action = () => {
     ApiConnector.logout(response => {
-        (response.success) ? location.reload() : console.error("Все пропало!");
+        response.success ? location.reload() : console.error("Все пропало!");
     });
 };
 
 ApiConnector.current(response => {
-    (response.success) ? ProfileWidget.showProfile(response.data) : console.error("Все пропало!");
+    response.success ? ProfileWidget.showProfile(response.data) : console.error("Все пропало!");
 });
 
 const rates = new RatesBoard();
@@ -30,21 +30,21 @@ const money = new MoneyManager();
 
 money.addMoneyCallback = data => {
     ApiConnector.addMoney(data, response => {
-        response.success ? ProfileWidget.showProfile(response.data) : money.setMessage(!response.success, response.data);
+        response.success ? (ProfileWidget.showProfile(response.data), money.setMessage(!response.success, "Ура!"))  : money.setMessage(!response.success, response.data); //! меняем цвет окошка при успехе на зеленый
 
     });
 }
 
 money.conversionMoneyCallback = data => {
     ApiConnector.convertMoney(data, response => {
-        response.success ? ProfileWidget.showProfile(response.data) : money.setMessage(!response.success, response.data);
+        response.success ? (ProfileWidget.showProfile(response.data), money.setMessage(!response.success, "Ура!"))  : money.setMessage(!response.success, response.data); //! меняем цвет окошка при успехе на зеленый
 
     });
 }
 
 money.sendMoneyCallback = data => {
     ApiConnector.transferMoney(data, response => {
-        response.success ? ProfileWidget.showProfile(response.data) : money.setMessage(!response.success, response.data);
+        response.success ? (ProfileWidget.showProfile(response.data), money.setMessage(!response.success, "Ура!"))  : money.setMessage(!response.success, response.data); //! меняем цвет окошка при успехе на зеленый
     });
 }
 
@@ -64,8 +64,7 @@ favorites.addUserCallback = data => {
             favorites.clearTable();
             favorites.fillTable(response.data);
             money.updateUsersList(response.data);
-            favorites.setMessage(response.success);
-            favorites.setMessage(response.success, response.data);
+            favorites.setMessage(response.data = "Ура! У Вас появился новый друг!"); //по другому не придумал как, иначе [object Object]
         }
         favorites.setMessage(!response.success, response.data);
     })
@@ -77,8 +76,7 @@ favorites.removeUserCallback = data => {
           favorites.clearTable();
           favorites.fillTable(response.data);
           money.updateUsersList(response.data);
-          favorites.setMessage(response.success);
-          favorites.setMessage(response.success, response.data);
+          favorites.setMessage( response.data = "Пользователь успешно удален!");  //по другому не придумал как, иначе [object Object]
         }
         favorites.setMessage(!response.success, response.data);
     })

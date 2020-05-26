@@ -1,14 +1,14 @@
 "use strict";
-const userForm = new UserForm();
+const user = new UserForm();
 
-userForm.loginFormCallback = data => {
+user.loginFormCallback = data => {
     ApiConnector.login(data, response => {
       response.success ? location.reload() : user.setLoginErrorMessage(response.data);
       console.log(response);
     });
   }
 
-  userForm.registerFormCallback = data => {
+  user.registerFormCallback = data => {
     ApiConnector.register(data, response => {
       response.success ? location.reload() : user.setRegisterErrorMessage(response.data);
       console.log(response);
